@@ -1,0 +1,2 @@
+{% extends "base.html" %}{% block content %}<h1>Gestão de professores</h1><div class="card"><h2>Novo professor</h2><form method="post">{% csrf_token %}{{ form.as_p }}<button type="submit">Cadastrar professor</button></form></div>
+<div class="card"><h2>Professores registados</h2><table><tr><th>Nome</th><th>Disciplina</th><th>Telefone</th></tr>{% for t in items %}<tr><td>{{ t.user.get_full_name }}</td><td>{{ t.subject }}</td><td>{{ t.phone }}</td></tr>{% empty %}<tr><td colspan="3">Nenhum professor cadastrado.</td></tr>{% endfor %}</table></div>{% endblock %}

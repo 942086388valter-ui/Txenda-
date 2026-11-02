@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block content %}
+<div class="card"><h1>Dados da instituição</h1><p>Estas informações e o logótipo serão usados nos documentos oficiais.</p>
+<form method="post" enctype="multipart/form-data">{% csrf_token %}{{ form.as_p }}<button type="submit">Guardar configurações</button></form>
+{% if institution.logo %}<p>Logótipo actual:</p><img src="{{ institution.logo.url }}" alt="Logótipo" style="max-width:160px;max-height:100px">{% endif %}
+</div>{% endblock %}

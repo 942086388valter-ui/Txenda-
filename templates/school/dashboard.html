@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% block content %}
+<h1>Painel de controlo</h1><p>Resumo geral da instituição.</p>
+{% if user.is_superuser %}
+<div class="grid">
+<div class="card stat">Estudantes<strong>{{ students }}</strong></div>
+<div class="card stat">Professores<strong>{{ teachers }}</strong></div>
+<div class="card stat">Notas lançadas<strong>{{ grades }}</strong></div>
+<div class="card stat">Média geral<strong>{{ average }}/20</strong></div></div>
+<div class="card"><h2>Notas recentes</h2><table><tr><th>Estudante</th><th>Disciplina</th><th>Trimestre</th><th>Nota</th></tr>
+{% for g in recent_grades %}<tr><td>{{ g.student.user.get_full_name }}</td><td>{{ g.subject }}</td><td>{{ g.term }}</td><td>{{ g.score }}</td></tr>{% empty %}<tr><td colspan="4">Ainda não existem notas.</td></tr>{% endfor %}</table></div>
+{% elif my_grades %}<div class="card"><h2>As minhas notas</h2><table><tr><th>Disciplina</th><th>Trimestre</th><th>Nota</th></tr>{% for g in my_grades %}<tr><td>{{ g.subject }}</td><td>{{ g.term }}</td><td>{{ g.score }}</td></tr>{% endfor %}</table></div>
+{% elif user.teacher_profile %}<div class="card"><h2>Área do professor</h2><p>Utilize o menu Notas para registar e consultar avaliações.</p></div>
+{% else %}<div class="card"><h2>Bem-vindo</h2><p>O seu perfil ainda não está associado a uma função escolar.</p></div>{% endif %}
+{% endblock %}
+{% if user.student_profile %}
+<div class="card"><h2>Os meus documentos</h2>
+<a class="btn" href="{% url 'student_report_pdf' user.student_profile.id %}">Descarregar boletim PDF</a>
+<a class="btn" href="{% url 'enrollment_certificate_pdf' user.student_profile.id %}">Certificado de matrícula</a></div>
+{% elif user.is_superuser or user.teacher_profile %}
+<div class="card"><h2>Documentos oficiais</h2><p>Os estudantes podem descarregar o seu boletim e certificado na sua área pessoal. O administrador pode emitir relatórios globais.</p></div>
+{% endif %}

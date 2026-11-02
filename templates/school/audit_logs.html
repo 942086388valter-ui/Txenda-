@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% block content %}<div class="card"><h1>Auditoria do sistema</h1>
+<table><tr><th>Data</th><th>Utilizador</th><th>Acção</th><th>Detalhes</th><th>IP</th></tr>
+{% for x in logs %}<tr><td>{{ x.created_at|date:"d/m/Y H:i" }}</td><td>{{ x.user|default:"Sistema" }}</td><td>{{ x.action }}</td><td>{{ x.details }}</td><td>{{ x.ip_address|default:"—" }}</td></tr>{% empty %}<tr><td colspan="5">Sem registos.</td></tr>{% endfor %}</table></div>{% endblock %}

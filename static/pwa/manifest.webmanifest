@@ -1,0 +1,11 @@
+{
+  "name": "TXENDA - Sistema Inteligente de Gestão Escolar",
+  "short_name": "TXENDA",
+  "description": "Plataforma de gestão escolar",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f2f6fb",
+  "theme_color": "#102b4e",
+  "icons": []
+}

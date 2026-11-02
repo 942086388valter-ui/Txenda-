@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TXENDA | Gestão Escolar</title>
+<style>
+:root{--navy:#09264a;--blue:#145da0;--pale:#edf4fb;--gold:#d6ad48}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f3f6fa;color:#203047}
+header{background:var(--navy);color:white;padding:17px 25px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:23px;font-weight:800;letter-spacing:1px}.brand small{display:block;font-size:11px;font-weight:400;letter-spacing:0}
+nav{background:#fff;padding:14px 25px;box-shadow:0 2px 8px #0001}nav a{color:var(--navy);text-decoration:none;margin-right:22px;font-weight:600}
+main{max-width:1180px;margin:28px auto;padding:0 18px}.card{background:#fff;padding:22px;border-radius:12px;box-shadow:0 4px 18px #09264a0c;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}.stat{border-left:5px solid var(--blue)}.stat strong{font-size:30px;color:var(--navy);display:block;margin-top:8px}
+h1,h2{color:var(--navy)}label{display:block;font-weight:600;margin:12px 0 5px}input,select{width:100%;padding:11px;border:1px solid #ccd6e2;border-radius:7px}
+button,.btn{background:var(--blue);color:#fff;border:0;padding:11px 17px;border-radius:7px;cursor:pointer;text-decoration:none;display:inline-block;margin-top:12px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px;border-bottom:1px solid #e6ebf1}th{color:var(--navy)}
+.msg{padding:10px;background:#e5f5eb;border-radius:6px;margin:8px 0}.errorlist{color:#b42318}
+@media(max-width:600px){nav a{display:inline-block;margin:7px 12px 7px 0}header{padding:14px}}
+</style><link rel="manifest" href="/static/pwa/manifest.webmanifest">
+<meta name="theme-color" content="#102b4e">
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("/service-worker.js")
+    .then(reg => { if (navigator.onLine) reg.active?.postMessage("SYNC_NOW"); })
+    .catch(err => console.warn("PWA TXENDA:", err)));
+}
+window.addEventListener("online", () => {
+  navigator.serviceWorker?.controller?.postMessage("SYNC_NOW");
+});
+</script>
+</head>
+<body>
+<header><div class="brand">TXENDA<small>Sistema Inteligente de Gestão Escolar</small></div>
+<div>{% if user.is_authenticated %}{{ user.get_full_name|default:user.username }} · <a style="color:white" href="{% url 'logout' %}">Sair</a>{% endif %}</div></header>
+{% if user.is_authenticated %}<nav><a href="{% url 'dashboard' %}">Dashboard</a><a href="{% url 'students' %}">Estudantes</a><a href="{% url 'teachers' %}">Professores</a><a href="{% url 'grades' %}">Notas</a><a href="{% url "classes" %}">Turmas</a><a href="{% url "subjects" %}">Disciplinas</a><a href="{% url "enrollments" %}">Matrículas</a><a href="{% url "attendance" %}">Presenças</a>{% if user.is_superuser %}<a href="{% url "institution_settings" %}">Instituição</a><a href="{% url "audit_logs" %}">Auditoria</a><a href="{% url "performance_report" %}">Relatório PDF</a>{% endif %}</nav>{% endif %}
+<main>{% for message in messages %}<div class="msg">{{ message }}</div>{% endfor %}{% block content %}{% endblock %}</main>
+</body></html>

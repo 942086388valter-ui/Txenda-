@@ -1,0 +1,3 @@
+{% extends "base.html" %}{% block content %}
+<div class="card" style="max-width:440px;margin:55px auto"><h1>Bem-vindo ao TXENDA</h1><p>Aceda à sua conta escolar.</p>
+<form method="post">{% csrf_token %}{{ form.as_p }}<button type="submit">Entrar</button></form></div>{% endblock %}
