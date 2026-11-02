@@ -21,7 +21,7 @@ class Subject(models.Model):
  name=models.CharField("Disciplina",max_length=100)
  code=models.CharField("Código",max_length=20,unique=True)
  class_group=models.ForeignKey(ClassGroup,on_delete=models.CASCADE)
- teacher=models.ForeignKey(Teacher,on_delete=models.SET_NULL,null=True,blank=True)
+ teacher=models.ForeignKey(Teacher,on_delete=models.SET_NULL,null=True,blank=True,related_name="subjects")
  class Meta: unique_together=("name","class_group")
  def __str__(self): return self.name+" - "+self.class_group.name
 class Enrollment(models.Model):
