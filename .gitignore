@@ -10,3 +10,5 @@ media/
 .DS_Store
 
 txenda_data.json
+
+txenda/settings_backup.py
