@@ -8,3 +8,5 @@ venv/
 staticfiles/
 media/
 .DS_Store
+
+txenda_data.json
